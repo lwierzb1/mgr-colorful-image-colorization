@@ -2,6 +2,7 @@
 import cv2
 
 from abstract_colorizer import AbstractColorizer
+from image_processing_toolkit import read_as_float_matrix
 
 __author__ = "Lukasz Wierzbicki"
 __version__ = "1.0.0"
@@ -33,7 +34,7 @@ class ImageColorizer(AbstractColorizer):
     def __init__(self, source, destination):
         super().__init__()
         self.__destination = destination
-        self.__bgr_image = source
+        self.__bgr_image = read_as_float_matrix(source)
 
     def colorize(self):
         result = self._colorization_solver.solve(self.__bgr_image)
