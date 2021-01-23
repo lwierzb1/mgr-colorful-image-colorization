@@ -34,7 +34,7 @@ class ImageColorizer(AbstractColorizer):
     def __init__(self, source, destination):
         super().__init__()
         self.__destination = destination
-        self.__bgr_image = read_as_float_matrix(source)
+        self.__bgr_image = cv2.imread(source)
 
     def colorize(self):
         result = self._colorization_solver.solve(self.__bgr_image)

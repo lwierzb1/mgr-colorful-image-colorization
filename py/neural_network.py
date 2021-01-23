@@ -47,12 +47,12 @@ class NeuralNetwork:
 
     def __init__(self):
         config_reader = ConfigReader()
-        self.__PROTO_FILE = config_reader.get_property('ProtoFile')
-        self.__WEIGHTS_FILE = config_reader.get_property('WeightsFile')
-        quantized_lab_space_path = config_reader.get_property('QuantizedLabSpace')
+        self.__PROTO_FILE = config_reader.get_string_property('ProtoFile')
+        self.__WEIGHTS_FILE = config_reader.get_string_property('WeightsFile')
+        quantized_lab_space_path = config_reader.get_string_property('QuantizedLabSpace')
         self.__QUANTIZED_LAB_SPACE = np.load(quantized_lab_space_path).transpose().reshape(2, 313, 1, 1)
-        self.__INPUT_WIDTH = config_reader.get_property('Width')
-        self.__INPUT_HEIGHT = config_reader.get_property('Height')
+        self.__INPUT_WIDTH = config_reader.get_int_property('Width')
+        self.__INPUT_HEIGHT = config_reader.get_int_property('Height')
 
         self.__neural_network = cv2.dnn.readNetFromCaffe(self.__PROTO_FILE, self.__WEIGHTS_FILE)
         self.__populate_network_layers_with_quantized_lab_space()

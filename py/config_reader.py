@@ -28,5 +28,8 @@ class ConfigReader:
         self.__config_parser = configparser.ConfigParser()
         self.__config_parser.read(self.__INI_PATH)
 
-    def get_property(self, name):
+    def get_string_property(self, name):
         return self.__config_parser[self.__CNN_SECTION][name]
+
+    def get_int_property(self, name):
+        return self.__config_parser.getint(self.__CNN_SECTION, name)
