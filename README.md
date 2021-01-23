@@ -18,6 +18,9 @@ git lfs clone https://github.com/lwierzb1/mgr-colorful-image-colorization.git
 
 # Proces uruchamiania aplikacji
 
+Ważnym punktem poprawnego uruchomienia aplikacji jest ewentualna korekta ustawień sieci neuronowej umieszonej w
+pliku `cnn_config.ini`
+
 ```
 python3 -m pipenv install
 python3 -m pipenv shell
