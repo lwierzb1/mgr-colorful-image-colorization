@@ -44,7 +44,8 @@ class VideoColorizer(AbstractColorizer):
             # have reached the end of the video
             if frame_exists is False:
                 break
-            self.__video_writer.write_frame(frame)
+            colorized_frame = self._colorization_solver.solve(frame)
+            self.__video_writer.write_frame(colorized_frame)
             key = cv2.waitKey()
             if key == 27:  # Esc key to stop
                 break
