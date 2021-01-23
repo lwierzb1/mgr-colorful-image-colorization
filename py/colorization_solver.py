@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-from image_processing_toolkit import bgr_to_lab_channels, resize_matrix, matrix_to_blob, merge_l_channel_with_ab_space, \
-    lab_matrix_to_rgb_image
+from image_processing_toolkit import *
 from neural_network import NeuralNetwork
 
 __author__ = "Lukasz Wierzbicki"
@@ -10,10 +9,27 @@ __email__ = "01113202@pw.edu.pl"
 
 
 class ColorizationSolver:
+    """
+    A class used to solve Colorization problem. Using CNN [https://en.wikipedia.org/wiki/Convolutional_neural_network]
+    to colorize image. Gets grayscale image in BGR space, returns colorized image in BGR space.
+
+    Attributes
+    ----------
+    __neural_network
+        instance of CNN neural network
+
+    Methods
+    -------
+    solve()
+        Colorizes input grayscale image using CNN.
+    """
+
     def __init__(self):
         self.__neural_network = NeuralNetwork()
 
-    def solve(self, grayscale_bgr_matrix):
+    def solve(self, grayscale_bgr_image):
+        grayscale_bgr_matrix = bgr_image_to_float_matrix(grayscale_bgr_image)
+
         image_width = grayscale_bgr_matrix.shape[1]
         image_height = grayscale_bgr_matrix.shape[0]
 
@@ -21,8 +37,8 @@ class ColorizationSolver:
         predicted_ab_space = self.__predicate_ab_space(l_channel)
         ab_space = resize_matrix(predicted_ab_space, image_width, image_height)
         colorized_lab_matrix = merge_l_channel_with_ab_space(l_channel, ab_space)
-        colorized_rgb_image = lab_matrix_to_rgb_image(colorized_lab_matrix)
-        return colorized_rgb_image
+        colorized_bgr_image = lab_matrix_to_bgr_image(colorized_lab_matrix)
+        return colorized_bgr_image
 
     def __predicate_ab_space(self, l_channel):
         resized_l_channel = resize_matrix(l_channel, self.__neural_network.get_width(),

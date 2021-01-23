@@ -31,7 +31,7 @@ class VideoWriter:
        """
 
     def __init__(self, store_path, size):
-        self.__FPS = 25.0
+        self.__FPS = 20.0
         self.__SIZE = size
         self.__FOURCC = cv2.VideoWriter_fourcc(*'DIVX')
 

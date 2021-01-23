@@ -1,6 +1,8 @@
 #!/usr/bin/env python
-import numpy as np
 import cv2
+import numpy as np
+
+from config_reader import ConfigReader
 
 __author__ = "Lukasz Wierzbicki"
 __version__ = "1.0.0"
@@ -9,12 +11,48 @@ __email__ = "01113202@pw.edu.pl"
 
 
 class NeuralNetwork:
+    """
+    CNN neural network used to colorize grayscale image.
+    [https://arxiv.org/pdf/1603.08511]
+    ...
+
+    Attributes
+    ----------
+    __PROTO_FILE
+        file with cnn description. Describe the structure of neural network
+
+    __WEIGHTS_FILE
+        file that defines the internal parameters of cnn layers.
+
+    __QUANTIZED_LAB_SPACE
+        file with quantized lab space.
+
+    __INPUT_WIDTH
+        cnn input width.
+
+    __INPUT_HEIGHT
+        cnn input height.
+
+    __neural_network
+        instance of cnn neural network
+
+    Methods
+    -------
+    populate(blob_matrix)
+        sets input (blob_matrix) of __neural_network instance.
+
+    predict_ab_space()
+        predicts the ab space based on the provided input with the method populate()
+    """
+
     def __init__(self):
-        self.__PROTO_FILE = '../models/colorization_deploy_v2.prototxt'
-        self.__WEIGHTS_FILE = '../models/colorization_release_v2.caffemodel'
-        self.__QUANTIZED_LAB_SPACE = np.load('../models/quantized_lab_space.npy').transpose().reshape(2, 313, 1, 1)
-        self.__INPUT_WIDTH = 224
-        self.__INPUT_HEIGHT = 224
+        config_reader = ConfigReader()
+        self.__PROTO_FILE = config_reader.get_property('ProtoFile')
+        self.__WEIGHTS_FILE = config_reader.get_property('WeightsFile')
+        quantized_lab_space_path = config_reader.get_property('QuantizedLabSpace')
+        self.__QUANTIZED_LAB_SPACE = np.load(quantized_lab_space_path).transpose().reshape(2, 313, 1, 1)
+        self.__INPUT_WIDTH = config_reader.get_property('Width')
+        self.__INPUT_HEIGHT = config_reader.get_property('Height')
 
         self.__neural_network = cv2.dnn.readNetFromCaffe(self.__PROTO_FILE, self.__WEIGHTS_FILE)
         self.__populate_network_layers_with_quantized_lab_space()

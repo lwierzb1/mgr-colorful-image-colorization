@@ -39,14 +39,12 @@ class VideoColorizer(AbstractColorizer):
 
     def colorize(self):
         while True:
-            frame = self.__video_reader.read_next_frame()
+            frame_exists, frame = self.__video_reader.read_next_frame()
             # if we are viewing a video and we did not grab a frame then we
             # have reached the end of the video
-            if frame is None:
+            if frame_exists is False:
                 break
-
-            colored_frame = self._colorization_solver.solve(frame)
-            self.__video_writer.write_frame(colored_frame)
+            self.__video_writer.write_frame(frame)
             key = cv2.waitKey()
             if key == 27:  # Esc key to stop
                 break

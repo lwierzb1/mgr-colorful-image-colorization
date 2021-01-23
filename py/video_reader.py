@@ -43,4 +43,4 @@ class VideoReader:
         return frame
 
     def get_video_shape(self):
-        return self.__WIDTH, self.__HEIGHT
+        return int(self.__WIDTH), int(self.__HEIGHT)

@@ -45,9 +45,9 @@ def parse_args():
 
 def create_colorizer(args):
     if args.mode == 'image':
-        return ImageColorizer(args.input)
+        return ImageColorizer(args.input, args.store)
     elif args.mode == 'video':
-        return VideoColorizer(args.input)
+        return VideoColorizer(args.input, args.store)
     else:
         return CameraColorizer()
 

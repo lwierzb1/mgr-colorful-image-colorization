@@ -2,7 +2,6 @@
 import cv2
 
 from abstract_colorizer import AbstractColorizer
-from image_processing_toolkit import read_as_float_matrix
 
 __author__ = "Lukasz Wierzbicki"
 __version__ = "1.0.0"
@@ -22,8 +21,8 @@ class ImageColorizer(AbstractColorizer):
     __destination:
         path to the colored file
 
-    __grayscale_matrix:
-        matrix of float to colorize
+    __bgr_image:
+        image in BGR space to colorize
 
     Methods
     -------
@@ -34,10 +33,10 @@ class ImageColorizer(AbstractColorizer):
     def __init__(self, source, destination):
         super().__init__()
         self.__destination = destination
-        self.__grayscale_matrix = read_as_float_matrix(source)
+        self.__bgr_image = source
 
     def colorize(self):
-        result = self._colorization_solver.solve(self.__grayscale_matrix)
+        result = self._colorization_solver.solve(self.__bgr_image)
         self.__store_result(result)
 
     def __store_result(self, result):
