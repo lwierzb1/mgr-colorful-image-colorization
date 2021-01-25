@@ -9,7 +9,8 @@ Example usage:
 """
 import argparse
 import os
-
+import time
+import statistics
 from camera_colorizer import CameraColorizer
 from image_colorizer import ImageColorizer
 from video_colorizer import VideoColorizer
