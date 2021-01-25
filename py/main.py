@@ -55,8 +55,14 @@ def create_colorizer(args):
 
 def main():
     args = parse_args()
-    colorizer = create_colorizer(args)
-    colorizer.colorize()
+    xd = []
+    for i in range(10):
+        start = time.time()
+        colorizer = create_colorizer(args)
+        colorizer.colorize()
+        end = time.time()
+        xd.append(end - start)
+    print(min(xd), statistics.mean(xd), max(xd))
 
 
 if __name__ == "__main__":
