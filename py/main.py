@@ -28,7 +28,7 @@ def parse_args():
     parser.add_argument('--store', help='path to store result of algorithm')
     args = parser.parse_args()
 
-    if args.mode == 'image' or args.mode == 'video':
+    if args.mode is 'image' or args.mode is 'video':
         if args.input is None:
             print('Please give the input greyscale image name.')
             exit()
@@ -44,9 +44,9 @@ def parse_args():
 
 
 def create_colorizer(args):
-    if args.mode == 'image':
+    if args.mode is 'image':
         return ImageColorizer(args.input, args.store)
-    elif args.mode == 'video':
+    elif args.mode is 'video':
         return VideoColorizer(args.input, args.store)
     else:
         return CameraColorizer()

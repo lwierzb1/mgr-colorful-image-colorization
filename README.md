@@ -24,5 +24,8 @@ pliku `cnn_config.ini`
 ```
 python3 -m pipenv install
 python3 -m pipenv shell
+
 python3 main.py --input bw.bmp --mode image --store colored.bmp
+python3 main.py --mode camera
+python3 main.py --input 1.avi --mode video --store result_1.avi
 ```
